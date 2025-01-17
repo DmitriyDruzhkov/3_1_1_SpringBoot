@@ -11,8 +11,8 @@ import web.crud.SpringBoot.model.User;
 import web.crud.SpringBoot.service.UserService;
 
 @Controller
-
 public class UserController {
+
     private UserService userService;
 
     @Autowired
@@ -21,27 +21,25 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public String user(Model model) {
+    public String showAllUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());
         return "index";
     }
 
     @GetMapping("/users/new")
-    public String newUser(Model model) {
+    public String addNewUser(Model model) {
         model.addAttribute("user", new User());
-        System.out.println("newUser ");
         return "new";
     }
 
     @PostMapping("/users/new")
     public String createUser(@ModelAttribute("user") User user) {
-        System.out.println(user.toString());
         userService.addUser(user);
         return "redirect:/";
     }
 
-    @GetMapping("/deleteUser")
-    public String deleteUser(@RequestParam("id") long id) {
+    @PostMapping("/deleteUser")
+    public String deleteUser(@RequestParam("id") int id) {
         userService.deleteUser(id);
         return "redirect:/";
     }
